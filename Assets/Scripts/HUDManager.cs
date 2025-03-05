@@ -27,6 +27,8 @@ public class HUDManager : MonoBehaviour
 
     public Sprite emptySlot;
 
+    public GameObject middleDot;
+
     private void Awake()
     {
         if (THIS != null && THIS != this)

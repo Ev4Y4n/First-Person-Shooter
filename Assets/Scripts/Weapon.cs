@@ -8,18 +8,24 @@ public class Weapon : MonoBehaviour
 {
     public bool isActiveWeapon;
 
+    [Header("Shooting")]
     //Disparos
     public bool isShooting, readyToShoot;
     bool allowReset = true;
     public float shootingDelay=2f;
 
+    [Header("Burst")]
     //Cargador arma
     public int bulletsPerBurst = 3;
     public int burstBulletsLeft;
 
+    [Header("Spread")]
     //Expandir
     public float spreadInsensity;
+    public float hipSpreadIntensity;
+    public float adsSpreadIntensity;
 
+    [Header("Bullet")]
     //Bala
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
@@ -36,6 +42,8 @@ public class Weapon : MonoBehaviour
 
     public Vector3 spawnPosition;
     public Vector3 spawnRotation;
+
+    bool isADS;
 
     public enum WeaponModel
     {
@@ -62,6 +70,8 @@ public class Weapon : MonoBehaviour
         animator=GetComponent<Animator>();
 
         bulletsLeft = magazineSize;
+
+        spreadInsensity = hipSpreadIntensity;
     }
 
     private void Start()
@@ -78,6 +88,15 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                EnterADS();
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                ExitADS();
+            }
+
             GetComponent<Outline>().enabled = false;
 
             if (bulletsLeft == 0 && isShooting)
@@ -112,19 +131,39 @@ public class Weapon : MonoBehaviour
                 burstBulletsLeft = bulletsPerBurst;
                 FireWeapon();
             }
-
-        }
-        
+        }   
+    }
+  
+    private void EnterADS()
+    {
+        animator.SetTrigger("enterADS");
+        isADS = true;
+        HUDManager.THIS.middleDot.SetActive(false);
+        spreadInsensity = adsSpreadIntensity;
     }
 
-  
+    private void ExitADS()
+    {
+        animator.SetTrigger("exitADS");
+        isADS = false;
+        HUDManager.THIS.middleDot.SetActive(true);
+        spreadInsensity = hipSpreadIntensity;
+    }
 
     private void FireWeapon()
     {
         bulletsLeft--;
 
         //StartCoroutine(MuzzleEffect());
-        animator.SetTrigger("Shoot");
+
+        if (isADS)
+        {
+            animator.SetTrigger("shootADS");
+        }
+        else
+        {
+            animator.SetTrigger("Shoot");
+        }
 
         SoundManager.THIS.PlayShootingSound(thisWeaponModel);
 
@@ -222,11 +261,11 @@ public class Weapon : MonoBehaviour
 
         Vector3 direction = targetPoint - bulletSpawn.position;
 
-        float x = UnityEngine.Random.Range(-spreadInsensity, spreadInsensity);
+        float z = UnityEngine.Random.Range(-spreadInsensity, spreadInsensity);
         float y = UnityEngine.Random.Range(-spreadInsensity, spreadInsensity);
 
         //Devuelve la direccion y el spread de disparo
-        return direction + new Vector3(x, y, 0);
+        return direction + new Vector3(0, y, z);
     }
 
     private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
