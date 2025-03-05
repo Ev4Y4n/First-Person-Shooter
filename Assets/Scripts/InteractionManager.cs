@@ -7,6 +7,7 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager THIS { get; set; }
 
     public Weapon hoveredWeapon=null;
+    public AmmoBox hoveredAmmoBox = null;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class InteractionManager : MonoBehaviour
         {
             GameObject objectHitByRaycast = hit.transform.gameObject;
 
+            //Armas
             if (objectHitByRaycast.GetComponent<Weapon>() && objectHitByRaycast.GetComponent<Weapon>().isActiveWeapon==false)
             {
                 hoveredWeapon = objectHitByRaycast.gameObject.GetComponent<Weapon>();
@@ -46,6 +48,26 @@ public class InteractionManager : MonoBehaviour
                     hoveredWeapon.GetComponent<Outline>().enabled = false;
                 }
                 
+            }
+            //Caja de balas
+            if (objectHitByRaycast.GetComponent<AmmoBox>())
+            {
+                hoveredAmmoBox = objectHitByRaycast.gameObject.GetComponent<AmmoBox>();
+                hoveredAmmoBox.GetComponent<Outline>().enabled = true;
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    WeaponManager.THIS.PickupAmmo(hoveredAmmoBox);
+                    Destroy(objectHitByRaycast.gameObject); //destruir la caja de balas después de recogerlo
+                }
+            }
+            else
+            {
+                if (hoveredAmmoBox)
+                {
+                    hoveredAmmoBox.GetComponent<Outline>().enabled = false;
+                }
+
             }
 
         }

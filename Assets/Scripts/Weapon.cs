@@ -96,15 +96,15 @@ public class Weapon : MonoBehaviour
                 isShooting = Input.GetKeyDown(KeyCode.Mouse0);
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false)
+            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false && WeaponManager.THIS.CheckAmmoLeftFor(thisWeaponModel)>0)
             {
                 Reload();
             }
 
-            //Para una recarga automática
+            //Para una recarga automática una vez que se haya vaciado el cargador
             if (readyToShoot && !isShooting && isReloading == false && bulletsLeft <= 0)
             {
-                Reload();
+                //Reload();
             }
 
             if (readyToShoot && isShooting && bulletsLeft > 0)
@@ -116,6 +116,8 @@ public class Weapon : MonoBehaviour
         }
         
     }
+
+  
 
     private void FireWeapon()
     {
@@ -168,7 +170,17 @@ public class Weapon : MonoBehaviour
 
     private void ReloadCompleted()
     {
-        bulletsLeft = magazineSize;
+        if (WeaponManager.THIS.CheckAmmoLeftFor(thisWeaponModel) > magazineSize)
+        {
+            bulletsLeft = magazineSize;
+            WeaponManager.THIS.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+        }
+        else
+        {
+            bulletsLeft = WeaponManager.THIS.CheckAmmoLeftFor(thisWeaponModel);
+            WeaponManager.THIS.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+
+        }
         isReloading = false;
     }
 

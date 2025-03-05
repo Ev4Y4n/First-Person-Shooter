@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 4220688092236630470}
   - component: {fileID: 7055030535683444862}
   - component: {fileID: 3739948777014540891}
+  - component: {fileID: 4934883033537453123}
   m_Layer: 14
   m_Name: M48
   m_TagString: Untagged
@@ -361,6 +362,27 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!65 &4934883033537453123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512096861700792290}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0597422, y: 0.1766466, z: 0.72361195}
+  m_Center: {x: -0.004013401, y: 0.008913124, z: 0.023460414}
 --- !u!1 &4126962189193314737
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8087712721843710747
 Transform:
   m_ObjectHideFlags: 0
