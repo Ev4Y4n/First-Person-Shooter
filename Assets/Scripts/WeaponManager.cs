@@ -15,6 +15,25 @@ public class WeaponManager : MonoBehaviour
     public int totalRifleAmmo = 0;
     public int totalPistolAmmo = 0;
 
+    [Header("Throwables General")]
+    public float throwForce = 10f;
+    public GameObject throwableSpawn;
+    public float forceMultiplier=0;
+    public float forceMultiplierLimit=2f;
+
+    [Header("Lethal")]
+    public int maxLethals = 2;
+    public int lethalsCount = 0;
+    public Throwable.ThrowableType equippedLethalType;
+    public GameObject grenadePrefab;
+
+    [Header("Tactical")]
+    public int maxTacticals = 2;
+    public int tacticalCount = 0;
+    public Throwable.ThrowableType equippedTacticalType;
+    public GameObject smokeGrenadePrefab;
+
+
     private void Awake()
     {
         if (THIS != null && THIS != this)
@@ -30,6 +49,9 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         activeWeaponSlot = weaponSlots[0];
+
+        equippedLethalType = Throwable.ThrowableType.None;
+        equippedTacticalType = Throwable.ThrowableType.None;
     }
 
     private void Update()
@@ -54,7 +76,39 @@ public class WeaponManager : MonoBehaviour
         {
             SwitchActiveSlot(1);
         }
+
+        if (Input.GetKey(KeyCode.G)|| Input.GetKey(KeyCode.T))
+        {
+            forceMultiplier += Time.deltaTime;
+
+            if (forceMultiplier > forceMultiplierLimit)
+            {
+                forceMultiplier = forceMultiplierLimit;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.G))
+        {
+            if (lethalsCount > 0)
+            {
+                ThrowLethal();
+            }
+
+            forceMultiplier = 0;
+        }
+
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            if (tacticalCount > 0)
+            {
+                ThrowTactical();
+            }
+
+            forceMultiplier = 0;
+        }
     }
+
+    
 
     public void PickupWeapon(GameObject pickedupWeapon)
     {
@@ -105,6 +159,122 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    public void PickupThrowable(Throwable throwable)
+    {
+        switch (throwable.throwableType)
+        {
+            case Throwable.ThrowableType.Grenade:
+                PickupThrowableAsLethal(Throwable.ThrowableType.Grenade);
+                break;
+
+            case Throwable.ThrowableType.Smoke_Granade:
+                PickupThrowableAsTactical(Throwable.ThrowableType.Smoke_Granade);
+                break;
+        }
+    }
+
+    private void PickupThrowableAsTactical(Throwable.ThrowableType tactical)
+    {
+        if (equippedTacticalType == tactical || equippedTacticalType == Throwable.ThrowableType.None)
+        {
+            equippedTacticalType = tactical;
+
+            if (tacticalCount < maxTacticals)
+            {
+                tacticalCount += 1;
+                Destroy(InteractionManager.THIS.hoveredThrowable.gameObject);
+                HUDManager.THIS.UpdateThrowablesUI();
+            }
+            else
+            {
+                print("Tactical limit reached");
+            }
+        }
+        else
+        {
+            //no puede coger otro tactical 
+            //opcion de cambiar el tactical
+        }
+    }
+
+    private void PickupThrowableAsLethal(Throwable.ThrowableType lethal)
+    {
+        if (equippedLethalType == lethal || equippedLethalType==Throwable.ThrowableType.None)
+        {
+            equippedLethalType = lethal;
+
+            if (lethalsCount < maxLethals)
+            {
+                lethalsCount += 1;
+                Destroy(InteractionManager.THIS.hoveredThrowable.gameObject);
+                HUDManager.THIS.UpdateThrowablesUI();
+            }
+            else
+            {
+                print("Lethal limit reached");
+            }
+        }
+        else
+        {
+            //no puede coger otro lethal
+            //opcion de cambiar el lethal
+        }
+    }
+
+    private void ThrowLethal()
+    {
+        GameObject lethalPrefab = GetThrowablePrefab(equippedLethalType);
+
+        GameObject throwable = Instantiate(lethalPrefab, throwableSpawn.transform.position, Camera.main.transform.rotation);
+        Rigidbody rb = throwable.GetComponent<Rigidbody>();
+
+        rb.AddForce(Camera.main.transform.forward * (throwForce*forceMultiplier), ForceMode.Impulse);
+
+        throwable.GetComponent<Throwable>().hasBeenThrown = true;
+
+        lethalsCount -= 1;
+
+        if (lethalsCount <= 0)
+        {
+            equippedLethalType = Throwable.ThrowableType.None;
+        }
+
+        HUDManager.THIS.UpdateThrowablesUI();
+    }
+
+    private void ThrowTactical()
+    {
+        GameObject tacticalPrefab = GetThrowablePrefab(equippedTacticalType);
+
+        GameObject throwable = Instantiate(tacticalPrefab, throwableSpawn.transform.position, Camera.main.transform.rotation);
+        Rigidbody rb = throwable.GetComponent<Rigidbody>();
+
+        rb.AddForce(Camera.main.transform.forward * (throwForce * forceMultiplier), ForceMode.Impulse);
+
+        throwable.GetComponent<Throwable>().hasBeenThrown = true;
+
+        tacticalCount -= 1;
+
+        if (tacticalCount <= 0)
+        {
+            equippedLethalType = Throwable.ThrowableType.None;
+        }
+
+        HUDManager.THIS.UpdateThrowablesUI();
+    }
+
+    private GameObject GetThrowablePrefab(Throwable.ThrowableType throwableType)
+    {
+        switch (throwableType)
+        {
+            case Throwable.ThrowableType.Grenade:
+                return grenadePrefab;
+            case Throwable.ThrowableType.Smoke_Granade:
+                return smokeGrenadePrefab;
+        }
+        return new();
+    }
+
     public void SwitchActiveSlot(int slotNumber)
     {
         if (activeWeaponSlot.transform.childCount>0)
@@ -147,4 +317,6 @@ public class WeaponManager : MonoBehaviour
                 return 0;
         }
     }
+
+
 }
