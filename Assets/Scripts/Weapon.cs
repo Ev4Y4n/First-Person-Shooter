@@ -7,6 +7,7 @@ using TMPro;
 public class Weapon : MonoBehaviour
 {
     public bool isActiveWeapon;
+    public int weaponDamage;
 
     [Header("Shooting")]
     //Disparos
@@ -88,6 +89,11 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            foreach(Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
+
             if (Input.GetMouseButtonDown(1))
             {
                 EnterADS();
@@ -131,7 +137,14 @@ public class Weapon : MonoBehaviour
                 burstBulletsLeft = bulletsPerBurst;
                 FireWeapon();
             }
-        }   
+        }
+        else
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Default");
+            }
+        } 
     }
   
     private void EnterADS()
@@ -173,6 +186,9 @@ public class Weapon : MonoBehaviour
 
         //Instanciar balla
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+        Bullet bul = bullet.GetComponent<Bullet>();
+        bul.bulletDamage = weaponDamage;
 
         //Hacer que la bala mire hacia la direccion de disparo
         bullet.transform.forward = shootingDirection;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 342787299795139283}
   - component: {fileID: 6557112448401790649}
   - component: {fileID: 6130980607716818290}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7856590157590492153}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 623147660368137627}
   - component: {fileID: 2289402945114944560}
   - component: {fileID: 7865358673039913248}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 7055030535683444862}
   - component: {fileID: 3739948777014540891}
   - component: {fileID: 4934883033537453123}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: M48
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,12 +304,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveWeapon: 0
+  weaponDamage: 25
   isShooting: 0
   readyToShoot: 0
   shootingDelay: 0.15
   bulletsPerBurst: 1
   burstBulletsLeft: 0
   spreadInsensity: 0.1
+  hipSpreadIntensity: 0
+  adsSpreadIntensity: 0
   bulletPrefab: {fileID: 6808487724896052860, guid: 64041ae7dc92962459c84959fb651eae, type: 3}
   bulletSpawn: {fileID: 7856590157590492153}
   bulletVelocity: 700
@@ -394,7 +397,7 @@ GameObject:
   - component: {fileID: 2434593950802001002}
   - component: {fileID: 1142825195731411638}
   - component: {fileID: 981343872146423736}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +483,7 @@ GameObject:
   - component: {fileID: 4470504123768088852}
   - component: {fileID: 7850881289555893992}
   - component: {fileID: 577865260248375417}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: muzzelFlash 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,7 +664,7 @@ GameObject:
   - component: {fileID: 6012331214136456757}
   - component: {fileID: 2615386252198820961}
   - component: {fileID: 6041825314811075916}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +747,7 @@ GameObject:
   - component: {fileID: 4539731020182955646}
   - component: {fileID: 5582010152255572508}
   - component: {fileID: 2055490039580337396}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Rear_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

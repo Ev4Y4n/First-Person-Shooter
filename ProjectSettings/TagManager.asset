@@ -11,6 +11,8 @@ TagManager:
   - Target
   - Wall
   - Beer
+  - FxTemporaire
+  - Zombie
   layers:
   - Default
   - TransparentFX
