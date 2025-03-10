@@ -30,10 +30,10 @@ public class Bullet : MonoBehaviour
             //No se destruirá la bala en el impacto
         }
 
-        if (objectWeHit.gameObject.CompareTag("Zombie"))
+        if (objectWeHit.gameObject.CompareTag("Enemy"))
         {
             print("hit a Zombie");
-            objectWeHit.gameObject.GetComponent<Zombie>().TakeDamage(bulletDamage);
+            objectWeHit.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
             Destroy(gameObject);
         }
     }

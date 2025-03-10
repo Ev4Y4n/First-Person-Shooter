@@ -13,6 +13,8 @@ TagManager:
   - Beer
   - FxTemporaire
   - Zombie
+  - Enemy
+  - Waypoints
   layers:
   - Default
   - TransparentFX
