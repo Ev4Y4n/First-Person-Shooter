@@ -20,6 +20,11 @@ public class ZombieAttackState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (SoundManager.THIS.zombieChannel.isPlaying == false)
+        {
+            SoundManager.THIS.zombieChannel.PlayOneShot(SoundManager.THIS.zombieAttack);
+        }
+
         LookAtPlayer();
 
         //Comprobar si el agent tiene que dejar de atacar
@@ -40,4 +45,9 @@ public class ZombieAttackState : StateMachineBehaviour
         agent.transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        SoundManager.THIS.zombieChannel.Stop();
+
+    }
 }
