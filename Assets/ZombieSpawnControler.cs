@@ -28,6 +28,7 @@ public class ZombieSpawnControler : MonoBehaviour
     private void Start()
     {
         currentZombiePerWave = initialZombiePerWave;
+        GlobalReferences.THIS.waveNumber = currentWave;
         StartNextWave();
     }
 
@@ -35,6 +36,7 @@ public class ZombieSpawnControler : MonoBehaviour
     {
         currentZombiesAlive.Clear();
         currentWave++;
+        GlobalReferences.THIS.waveNumber = currentWave;
         currentWaveUI.text = "Wave: " + currentWave.ToString();
         StartCoroutine(SpawnWave());
     }
@@ -60,11 +62,11 @@ public class ZombieSpawnControler : MonoBehaviour
         zombiesToRemove.Clear();
 
         //start cooldown if all zombies are dead
-        if(currentZombiesAlive.Count==0 && inCooldown==false)
+        if(currentZombiesAlive.Count==0 && !inCooldown)
         {
             StartCoroutine(WaveCooldown());
         }
-
+        /*
         //run the cooldown counter
         if (inCooldown)
         {
@@ -74,16 +76,24 @@ public class ZombieSpawnControler : MonoBehaviour
         {
             cooldownCounter = waveCooldown;
         }
+        */
 
-        cooldownCounterUI.text = cooldownCounter.ToString("F0");//F0 para quitar decimales
+        currentWaveUI.text = "Wave: " + currentWave.ToString();
     }
 
     private IEnumerator WaveCooldown()
     {
         inCooldown = true;
         waveOverUI.gameObject.SetActive(true);
+        cooldownCounter = waveCooldown;  // Inicializamos correctamente
 
-        yield return new WaitForSeconds(waveCooldown);
+        while (cooldownCounter > 0)
+        {
+            cooldownCounterUI.text = cooldownCounter.ToString("F0");//F0 para quitar decimales
+            yield return null; // Espera un frame
+            cooldownCounter -= Time.deltaTime;
+        }
+
 
         inCooldown = false;
         waveOverUI.gameObject.SetActive(false);

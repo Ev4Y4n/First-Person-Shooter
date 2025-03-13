@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public int HP = 100;
@@ -63,6 +63,23 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         gameOverUI.gameObject.SetActive(true);
+
+        int waveSurvived = GlobalReferences.THIS.waveNumber;
+
+        if (waveSurvived - 1 > SaveLoadManager.THIS.LoadHighScore())
+        {
+
+            SaveLoadManager.THIS.SaveHighScore(waveSurvived-1);//par conseguir la ultima oleada 
+        }
+
+        StartCoroutine(ReturnToMainMenu());
+    }
+
+    private IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("MainMenu");
+        
     }
 
     private IEnumerator bloodyScreenEffect()
