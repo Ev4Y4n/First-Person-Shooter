@@ -7,13 +7,16 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
-    public int HP = 100;
+    public int HP = 180;
     public GameObject bloodyScreen;
 
     public TextMeshProUGUI playerHealthUI;
     public GameObject gameOverUI;
 
     public bool isDead;
+
+    private Animator animator;
+
 
     private void Start()
     {
@@ -131,5 +134,6 @@ public class Player : MonoBehaviour
                 TakeDamage(collision.gameObject.GetComponent<ZombieHand>().damage);
             }
         }
+        
     }
 }

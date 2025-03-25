@@ -16,6 +16,7 @@ TagManager:
   - Enemy
   - Waypoints
   - ZombieHand
+  - Entrance
   layers:
   - Default
   - TransparentFX
