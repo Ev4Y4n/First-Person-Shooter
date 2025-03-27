@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger("DIE2");
             }
             isDead = true;
+            StartCoroutine(Die());
 
             //Dead sound
             SoundManager.THIS.zombieChannel2.PlayOneShot(SoundManager.THIS.zombieDeath);
@@ -46,6 +47,13 @@ public class Enemy : MonoBehaviour
             //Hurt sound
             SoundManager.THIS.zombieChannel2.PlayOneShot(SoundManager.THIS.zombieHurt);
         }
+    }
+
+    public IEnumerator Die()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+
     }
 
     private void OnDrawGizmos()

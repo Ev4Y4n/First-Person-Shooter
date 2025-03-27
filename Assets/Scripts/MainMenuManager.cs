@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     public GameObject helpPanel;
-    public GameObject settingsPanel;
+    //public GameObject settingsPanel;
     public GameObject creditsPanel;
 
 
@@ -25,7 +25,7 @@ public class MainMenuManager : MonoBehaviour
     {
         helpPanel.SetActive(false);
     }
-
+    /*
     public void OpenSettingsPanel()
     {
         settingsPanel.SetActive(true);
@@ -35,7 +35,7 @@ public class MainMenuManager : MonoBehaviour
     {
         settingsPanel.SetActive(false);
     }
-
+    */
     public void OpenCreditsPanel()
     {
         creditsPanel.SetActive(true);
