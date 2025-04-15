@@ -44,6 +44,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeHealthBox(int lifeAmount)
+    {
+        HP += lifeAmount;  
+        if (HP > 180)  
+        {
+            HP = 180;
+        }
+
+        playerHealthUI.text = $"Health: {HP}";
+    }
+
     private void PlayerDead()
     {
         SoundManager.THIS.playerChannel.PlayOneShot(SoundManager.THIS.playerDie);

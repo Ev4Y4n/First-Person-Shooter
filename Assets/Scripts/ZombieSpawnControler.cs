@@ -87,8 +87,6 @@ public class ZombieSpawnControler : MonoBehaviour
         waveOverUI.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(waveCooldown);
-       
-
 
         inCooldown = false;
         waveOverUI.gameObject.SetActive(false);
@@ -115,7 +113,4 @@ public class ZombieSpawnControler : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
         }
     }
-
-    
-
 }

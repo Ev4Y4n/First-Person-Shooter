@@ -113,14 +113,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5002809180069716793}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.1514268, y: 0.15142687, z: 0.69070244, w: 0.69070256}
   m_LocalPosition: {x: 6.812, y: 1.4555, z: 11.969}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 668430400621480214}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 24.731, z: 90}
 --- !u!33 &9049992775425436507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 3
-  damageRadius: 20
-  explosionForce: 1200
+  damageRadius: 10
+  explosionForce: 800
   hasBeenThrown: 0
   throwableType: 1
 --- !u!114 &2485013772646675119

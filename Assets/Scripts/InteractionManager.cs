@@ -9,6 +9,7 @@ public class InteractionManager : MonoBehaviour
     public Weapon hoveredWeapon=null;
     public AmmoBox hoveredAmmoBox = null;
     public Throwable hoveredThrowable = null;
+    public HealthBox hoveredHealthBox = null;
 
     private void Awake()
     {
@@ -73,11 +74,40 @@ public class InteractionManager : MonoBehaviour
                     Destroy(objectHitByRaycast.gameObject); //destruir la caja de balas después de recogerlo
                 }
             }
+            
             else
             {
                 if (hoveredAmmoBox)
                 {
                     hoveredAmmoBox.GetComponent<Outline>().enabled = false;
+                }
+
+            }
+            if (objectHitByRaycast.GetComponent<HealthBox>())
+            {
+                if (hoveredHealthBox)
+                {
+                    hoveredHealthBox.GetComponent<Outline>().enabled = false;
+                }
+                hoveredHealthBox = objectHitByRaycast.gameObject.GetComponent<HealthBox>();
+                hoveredHealthBox.GetComponent<Outline>().enabled = true;
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    Player player = FindObjectOfType<Player>();  // Encuentra el jugador en la escena
+                    if (player != null)
+                    {
+                        hoveredHealthBox.CollectBox(player);  // Llama al método para sumar la vida
+                    }
+
+                    Destroy(objectHitByRaycast.gameObject); //destruir la caja de balas después de recogerlo
+                }
+            }
+            else
+            {
+                if (hoveredHealthBox)
+                {
+                    hoveredHealthBox.GetComponent<Outline>().enabled = false;
                 }
 
             }

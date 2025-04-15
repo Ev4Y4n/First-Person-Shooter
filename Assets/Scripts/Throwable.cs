@@ -6,8 +6,8 @@ using UnityEngine;
 public class Throwable : MonoBehaviour
 {
     [SerializeField] float delay = 3f;
-    [SerializeField] float damageRadius = 20f;
-    [SerializeField] float explosionForce = 1200f;
+    [SerializeField] float damageRadius = 10f;
+    [SerializeField] float explosionForce = 600f;
 
     float countdown;
 
@@ -76,8 +76,14 @@ public class Throwable : MonoBehaviour
             Rigidbody rb = objectInRange.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                //Añadir el efecto de ceguera a los enemigos
+                //rb.AddExplosionForce(explosionForce, transform.position, damageRadius);
             }
+            /*
+            if (objectInRange.gameObject.GetComponent<Enemy>())
+            {
+                objectInRange.gameObject.GetComponent<Enemy>().TakeDamage(20);
+            }
+            */
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class HUDManager : MonoBehaviour
 
     public GameObject middleDot;
 
+    public GameObject stopPanel;
+    public GameObject helpPanel;
+
     private void Awake()
     {
         if (THIS != null && THIS != this)
@@ -42,8 +46,22 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        stopPanel.SetActive(false);
+        helpPanel.SetActive(false);
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown("p"))
+        {
+            stopPanel.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None; // Desbloquea el cursor
+            Cursor.visible = true; // Hace que el cursor sea visible
+        }
+
         Weapon activeWeapon = WeaponManager.THIS.activeWeaponSlot.GetComponentInChildren<Weapon>();
         Weapon unActiveWeapon = GetUnActiveWeaponSlot().GetComponentInChildren<Weapon>();
 
@@ -142,4 +160,34 @@ public class HUDManager : MonoBehaviour
                 break;
         }
     }
+
+    public void GameContinue()
+    {
+        stopPanel.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
+
+    public void Exit()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
+
+    public void OpenHelpPanel()
+    {
+        helpPanel.SetActive(true);
+        stopPanel.SetActive(false);
+        Time.timeScale = 0f;
+
+    }
+
+    public void CloseHelpPanel()
+    {
+        helpPanel.SetActive(false);
+        stopPanel.SetActive(true);
+        Time.timeScale = 0f;
+
+    }
+
+
 }
