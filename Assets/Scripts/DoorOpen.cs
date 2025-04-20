@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class DoorOpen : MonoBehaviour
 {
-    private Animator animator;
-    //private bool isOpen;
+    public Animator animator;
+    private bool isOpen;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
+        isOpen = false;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
-
-        if (collision.CompareTag("Player"))
+        if (other.CompareTag("Player")&& !isOpen )
         {
             animator.SetBool("doorOpen", true);
-
+            isOpen = true;
         }
-
     }
 
-    private void OnTriggerExit(Collider collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.CompareTag("Player"))
+        if (other.CompareTag("Player") &&isOpen)
         {
             animator.SetBool("doorOpen", false);
-
+            isOpen = false;
         }
     }
 }

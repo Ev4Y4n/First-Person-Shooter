@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseMovement : MonoBehaviour
 {
 
-    public float mouseSesitivity = 300f;
+    public float mouseSesitivity = 200f;
 
     float xRotation = 0f;
     float yRotation = 0f;
